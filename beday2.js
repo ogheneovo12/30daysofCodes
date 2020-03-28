@@ -20,4 +20,4 @@ if(  typeof arg ==  "string"||
         console.log("Error")
     }
 }
-validateType("2");
+validateType([]);
