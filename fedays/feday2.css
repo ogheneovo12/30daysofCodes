@@ -1,0 +1,114 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    background:linear-gradient(to bottom, #8350CE,#5613BB);
+    background-size:100% 100%;
+    font-family: 'century';
+}
+.logo Img{
+    width:50px;
+    height:50px;
+}
+.container{
+    position: relative;
+    display:flex;
+    width:80%;
+    min-height:500px;
+    background-color:#fff;
+    animation-name:fadeLeft;
+    animation-duration:1s;
+    animation-iteration-count:1;
+}
+.signInFormContainer{
+    width:40%;
+    min-height:100%;
+    padding:20px;
+    
+}
+.signIn-info-container{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width:60%;
+   min-height:100% ;
+   background:linear-gradient(to right,rgb(155, 125, 238),rgb(0, 22, 40,0.8)), url('./images/systembg.jpeg');
+   background-size: cover;
+}
+.form-control{
+   margin-top:50px;
+   margin-left:50px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.form-control .form-group{
+    margin:40px 10px 20px 0px;
+    width:250px;
+}
+.form-group input[type="textbox"]{
+   width: 100%;
+   height: 30px;
+   border:none;
+   border-bottom:1px solid rgba(86, 19,87,0.8);
+   
+}
+.form-group input[type="submit"]{
+    padding:0.8rem 3rem;
+    background-color: #1B1640;
+    border:none;
+    color: white;
+    border-radius: 0px 30px 0 30px;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.5));
+ }
+.form-group label{
+    color:#5613BB;
+    font-weight:bold;
+}
+.submit{
+    display: flex;
+    justify-content: space-between;
+}
+.signIn-info-container h1{
+    color: #fff;
+    font-weight: bold;
+    font-size:2rem;
+    font-family: fantasy;
+}
+.signIn-info-container .first-word{
+    font-size:5rem;
+    color: yellow;
+}
+@media only screen and (max-width: 925px) {
+    .signIn-info-container,.signInFormContainer{
+      width:100%;
+    }
+    
+    .container{
+        flex-wrap: wrap-reverse;
+        min-height:600px;
+    }
+    
+  }
+  @keyframes fadeLeft{
+      0%{
+      left: -9999px;
+      }
+      50%{
+          left:20px;
+      }
+      70%{
+          left:-20px;
+      }
+      100%{
+          left:0px;
+      }
+
+  }
