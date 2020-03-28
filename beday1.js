@@ -28,7 +28,6 @@ if (input.length > 0 ){
     rl.close();// close stdin 
 }else{
     rl.question('please enter numbers seperated by space:', (input) => {
-        // TODO: Log the answer in a databa;
         input = input.split(' ').map(Number);
         input.forEach(arg =>console.log(testSign(arg)))
         rl.close();
