@@ -3,6 +3,7 @@ const equalOccurence = (arr1, arr2) => {
   const alreadyCheckedValues = [];
   const longerArray = arr1.length > arr2.length ? arr1 : arr2;
   const shorterArray = arr1.length < arr2.length ? arr2 : arr1;
+  
   const elemThatOccuredTwice = shorterArray.filter(el => {
     if (longerArray.includes(el) && !alreadyCheckedValues.includes(el)) {
       alreadyCheckedValues.push(el);
@@ -11,4 +12,4 @@ const equalOccurence = (arr1, arr2) => {
   });
   console.log(elemThatOccuredTwice);
 };
-equalOccurence([1,1,0], [1, 1,]);
+equalOccurence([1,1,0,5,6,7], [1, 1,5,3,5]);
