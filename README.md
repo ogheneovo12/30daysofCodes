@@ -9,5 +9,5 @@ developers student clubs unilag 30 days of code
 | 2  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday2.js/ "Day 2")| check type of number, and print error when type is not valid|
 | 3  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday3.js/ "Day 3") | check for the number of occurence of  vowels in a variable |
 | 4  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday4.js/ "Day 4") | Write a JavaScript program to get a list of elements that exist in two separate arrays |
-| 5  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday5.js/ "Day 5") | Write a JavaScript program to check if a string is a palindrome or not, return bolean to confirm  |
+| 5  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday5.js/ "Day 5") | Write a JavaScript program to check if a string is a palindrome or not, return bolean true or false to confirm  |
 
