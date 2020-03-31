@@ -21,7 +21,7 @@ const getFibonacci2 = (n, store) => {
   store = store || {};
   if (store[n]) return store[n];
   if (n <= 1) return n;
-  return (store[n] = getFibonacci(n - 1, store) + getFibonacci(n - 2, store));
+  return (store[n] = getFibonacci2(n - 1, store) + getFibonacci2(n - 2, store));
 };
 
 console.log("fibo first approach:" + getFibonacci(30));
