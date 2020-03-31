@@ -24,5 +24,5 @@ const getFibonacci2 = (n, store) => {
   return (store[n] = getFibonacci2(n - 1, store) + getFibonacci2(n - 2, store));
 };
 
-console.log("fibo first approach:" + getFibonacci(30));
+console.log("fibo first approach:" + getFibonacci(3-i0));
 console.log("fibo second approach:" + getFibonacci2(30));
