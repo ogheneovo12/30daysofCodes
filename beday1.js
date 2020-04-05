@@ -16,4 +16,4 @@ const testSign = argv => {
       break;
   }
 };
-console.log(testSign(-2));
+console.log(testSign());

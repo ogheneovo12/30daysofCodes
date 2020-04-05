@@ -25,4 +25,6 @@ function printDate() {
   console.log(`Today is ${dayOftheWeek}\nCurrent time is ${formattedTime}`);
 }
 
+const today = new Date();
+console.log(today.toLocaleString());
 printDate();
