@@ -1,0 +1,25 @@
+{
+  "name": "30daysofcode",
+  "version": "1.0.0",
+  "description": "developers student clubs unilag 30 days of code",
+  "main": "beday0.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ogheneovo12/30daysofCodes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ogheneovo12/30daysofCodes/issues"
+  },
+  "homepage": "https://github.com/ogheneovo12/30daysofCodes#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
