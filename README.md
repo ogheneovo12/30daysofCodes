@@ -20,3 +20,7 @@ developers student clubs unilag 30 days of code
 | 13  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday13.js/ "Day 13") | create a simple node http or express server that recieve data through post request from one end point and return data through get request at another endpoint                                       |
 | 14  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday14.js/ "Day 14") | create a simple node http or express server that recieve an array of words through post request from one end point and return the words that are palindrome through get request at another endpoint |
 | 15  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday15.js/ "Day 15") | using node http or express, create an api that can be used to calculate a student semester Grade point accumulated(sgpa), the api recieves data from one endpoints and return at another            |
+| 16  | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday16.js/ "Day 16") | Using ExpressJs or the native Http module, write a server that takes in username, email                                                                                                             |
+
+and password from a SIGNUP route to create a user, and has a LOGIN route to
+authenticate the user using the password and the email or username. Enjoy :-) |
