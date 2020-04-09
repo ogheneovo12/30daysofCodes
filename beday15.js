@@ -67,7 +67,7 @@ app.get("/sgpa", (req, res) => {
     --> error in data format sent
     --> all unit zero entry(this might lead sgpa to be +/-Infinity)
 */
-  if (typeof sgpa != "undefines" && sgpa !== null && !Number.isNaN(sgpa)) {
+  if (typeof sgpa != "undefined" && sgpa !== null && !Number.isNaN(sgpa)) {
     res.json({ success: "true", sgpa });
   } else {
     res.json({
