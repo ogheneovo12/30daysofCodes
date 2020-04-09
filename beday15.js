@@ -35,12 +35,11 @@ const getpoints = (score, units, course) => {
     error =
       error +
       (course
-        ? `score ${score} for ${course} is out of range`
-        : `the score ${score} is out of range`);
-    return null;
+        ? ` score ${score} for ${course} is out of range`
+        : ` the score ${score} is out of range`);
+    return undefined;
   }
 };
-console.log(getpoints(101, 55, "maths"));
 
 function getSgpa(data) {
   let sgpa = 0;
@@ -73,8 +72,8 @@ app.get("/sgpa", (req, res) => {
   } else {
     res.json({
       success: "false",
-      error,
       message:
+        error ||
         "either no data have been passed, or the data format passed was incorrect, try reviewing your data,(note:at least 1 course unit must be greater than zero) try sending another data again",
     });
   }
