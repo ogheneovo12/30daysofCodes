@@ -17,21 +17,30 @@ app.get("/", (req, res) => {
     <p>immediately after sending get your sgpa  from /sgpa</p>
   `);
 });
-const getpoints = (score, units) => {
+let error = "";
+const getpoints = (score, units, course) => {
   if (score > 70 && score <= 100) {
     return units * 5; //A 70 - 100
-  } else if (score >= 60) {
+  } else if (score >= 60 && score <= 69) {
     return units * 4; //B 60 - 69
-  } else if (score >= 50) {
+  } else if (score >= 50 && score <= 69) {
     return units * 3; //C 50 - 59
-  } else if (score >= 45) {
+  } else if (score >= 45 && score <= 49) {
     return units * 2; //D 45 - 49
-  } else if (score >= 40) {
+  } else if (score >= 40 && score <= 44) {
     return units * 1; // E 40 - 44
   } else if (score < 40) {
     return 0; //F below 40
+  } else {
+    error =
+      error +
+      (course
+        ? `score ${score} for ${course} is out of range`
+        : `the score ${score} is out of range`);
+    return null;
   }
 };
+console.log(getpoints(101, 55, "maths"));
 
 function getSgpa(data) {
   let sgpa = 0;
@@ -42,8 +51,8 @@ function getSgpa(data) {
       );
       let totalPoints = data.courses.reduce(
         (courseCurr, courseAdj) =>
-          getpoints(courseCurr.score, courseCurr.units) +
-          getpoints(courseAdj.score, courseAdj.units)
+          getpoints(courseCurr.score, courseCurr.units, courseCurr.course) +
+          getpoints(courseAdj.score, courseAdj.units, courseCurr.course)
       );
       sgpa = Math.ceil((totalPoints / totalUnits) * 100) / 100; //round up two decimal places
     }
@@ -64,6 +73,7 @@ app.get("/sgpa", (req, res) => {
   } else {
     res.json({
       success: "false",
+      error,
       message:
         "either no data have been passed, or the data format passed was incorrect, try reviewing your data,(note:at least 1 course unit must be greater than zero) try sending another data again",
     });
@@ -78,7 +88,7 @@ app.post("/courses", (req, res) => {
     res.json({
       success: "false",
       messgage:
-        "courses must be more than one and an must be array of objects(please refer to home to view format)",
+        "courses must be more than one and  must be an array of objects(please refer to home to view format)",
     });
   }
 });
