@@ -21,15 +21,15 @@ let error = "";
 const getpoints = (score, units, course) => {
   if (score > 70 && score <= 100) {
     return units * 5; //A 70 - 100
-  } else if (score >= 60 && score <= 69) {
+  } else if (score >= 60 && score < 70) {
     return units * 4; //B 60 - 69
-  } else if (score >= 50 && score <= 69) {
+  } else if (score >= 50 && score < 60) {
     return units * 3; //C 50 - 59
-  } else if (score >= 45 && score <= 49) {
+  } else if (score >= 45 && score < 50) {
     return units * 2; //D 45 - 49
-  } else if (score >= 40 && score <= 44) {
+  } else if (score >= 40 && score < 45) {
     return units * 1; // E 40 - 44
-  } else if (score < 40) {
+  } else if (score >= 0 && score < 40) {
     return 0; //F below 40
   } else {
     error =
@@ -76,6 +76,8 @@ app.get("/sgpa", (req, res) => {
         error ||
         "either no data have been passed, or the data format passed was incorrect, try reviewing your data,(note:at least 1 course unit must be greater than zero) try sending another data again",
     });
+    error = "";
+    data = {};
   }
 });
 app.post("/courses", (req, res) => {
