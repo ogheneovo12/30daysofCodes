@@ -35,7 +35,7 @@ const getpoints = (score, units, course) => {
     error =
       error +
       (course
-        ? ` score ${score} for ${course} is out of range`
+        ? ` score ${score} for ${course} is out of range,`
         : ` the score ${score} is out of range`);
     return undefined;
   }
