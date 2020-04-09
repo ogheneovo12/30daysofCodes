@@ -6,8 +6,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let data = {};
-
-const getpoints = ({ score, units }) => {
+app.get("/", (req, res) => {
+  res.send(`
+    <h1>Welcome to my sgpa api calculator</h1>
+   <p> please send data in this format</p>
+    <p>{
+            "courses":[{"course":maths, "units":3, "score":72},{"course":english, "units":2, "score":64}]
+    }</p>
+    <p>send data to /courses</p>
+    <p>immediately after sending get your sgpa  from /sgpa</p>
+  `);
+});
+const getpoints = (score, units) => {
   if (score > 70 && score <= 100) {
     return units * 5; //A 70 - 100
   } else if (score >= 60) {
@@ -31,7 +41,9 @@ function getSgpa(data) {
         (courseCurr, courseAdj) => courseCurr.units + courseAdj.units
       );
       let totalPoints = data.courses.reduce(
-        (courseCurr, courseAdj) => getpoints(courseCurr) + getpoints(courseAdj)
+        (courseCurr, courseAdj) =>
+          getpoints(courseCurr.score, courseCurr.units) +
+          getpoints(courseAdj.score, courseAdj.units)
       );
       sgpa = Math.ceil((totalPoints / totalUnits) * 100) / 100; //round up two decimal places
     }
