@@ -75,7 +75,11 @@ app.post("/courses", (req, res) => {
     data = req.body;
     res.json({ success: "true", data: [data] });
   } else {
-    res.json({ success: "false", messgage: "courses were not specified" });
+    res.json({
+      success: "false",
+      messgage:
+        "courses must be more than one and an must be array of objects(please refer to home to view format)",
+    });
   }
 });
 
