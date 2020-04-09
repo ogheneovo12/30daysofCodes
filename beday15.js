@@ -51,7 +51,7 @@ function getSgpa(data) {
       let totalPoints = data.courses.reduce(
         (courseCurr, courseAdj) =>
           getpoints(courseCurr.score, courseCurr.units, courseCurr.course) +
-          getpoints(courseAdj.score, courseAdj.units, courseCurr.course)
+          getpoints(courseAdj.score, courseAdj.units, courseAdj.course)
       );
       sgpa = Math.ceil((totalPoints / totalUnits) * 100) / 100; //round up two decimal places
     }
