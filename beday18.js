@@ -199,7 +199,7 @@ const authoriser = async (req, res, next) => {
       .send({ AUTH: false, error: "Not authorized to access this resource" });
   }
   const { name, email, signedUp_at } = user;
-  req.user = { name, email, joined: new Date(signedUp_at).toLocaleString() };
+  req.user = { _id:user._id,name, email, joined: new Date(signedUp_at).toLocaleString() };
   req.token = token;
   next();
 };
