@@ -9,7 +9,8 @@ body{
     justify-content: center;
     align-items: center;
     min-height:100vh;
-    background:linear-gradient(to bottom, #8350CE,#5613BB);
+    background-color: rgba(207, 45, 228, 0.94);
+    background-image: linear-gradient(-32deg, rgba(207, 45, 228, 0.94), rgba(228, 115, 45, 0.753));
     background-size:100% 100%;
     font-family: 'century';
 }

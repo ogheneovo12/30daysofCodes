@@ -1,45 +1,62 @@
-var http = require("http")
-var fs = require("fs")
+function validateInput(arr, expose) {
+  let error = "";
+  const validatePassword = (password) => {
+    if (password.length < 5) {
+      error += "password must be a minimum of 5 characters, ";
 
-var server = http.createServer((req,res)=>{
-    if (req.method == "POST"){
-        let body = "";
-        req.on('data',chunk=>{
-            body +=chunk.toString();
-        })
-        req.on("end",()=>{
-            console.log(body)
-            fs.writeFileSync('message.text',body)
-            res.end("ok")
-        })
-    }else{
-        res.end(`<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="./feday2.css">
-            <title>30daysOfCoding-signInPage</title>
-        </head>
-        <body>
-        <form method="POST" action="/message" class="form-control">
-        <div class="form-group">
-            <label>username</label>
-            <input type="textbox" name="username">
-        </div>
-        <div class="form-group">
-            <label>password</label>
-            <input type="password" name="password">
-        </div>
-        <div class="form-group submit"  >
-            <span><a href="#" >can't login?</a></span>
-            <label></label>
-            <input type="submit" value="login">
-        </div>
-       
-    </form>
-    </body>
-        `)
+      return false;
     }
-})
-server.listen(8000)
+    return true;
+  };
+  const validateEmail = (email) => {
+    let mailFormat = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    if (!mailFormat.test(email)) {
+      error += "invalid email format";
+      return false;
+    }
+    return true;
+  };
+  const validateUsername = (username) => {
+    //only check for length
+    if (username == "" || typeof username == "undefined") {
+      error += "invalid username";
+      return false;
+    }
+    return true;
+  };
+  if (arr) {
+    arr.forEach(({ type, value }) => {
+      switch (type) {
+        case "password":
+          validatePassword(value);
+          break;
+        case "email":
+          validateEmail(value);
+          break;
+        case "username":
+          validateUsername(value);
+          break;
+      }
+    });
+  }
+  if (expose) {
+    switch (expose) {
+      case "all":
+        return { validatePassword, validateEmail, validateUsername };
+        break;
+      case "password":
+        return validatePassword;
+        break;
+      case "email":
+        return validateEmail;
+        break;
+      case "username":
+        return validateUsername;
+        break;
+      default:
+        console.error({ error: "please use email,password,username or all" });
+        break;
+    }
+  }
+  return error;
+}
