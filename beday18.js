@@ -66,6 +66,7 @@ userSchema.methods.generateAuthToken = async function () {
     expiresIn: this.tokenLife,
   });
   this.tokens = this.tokens.concat({ token });
+  this.save();
   return token;
 };
 userSchema.statics.getByValidCredentials = async (username, password) => {
