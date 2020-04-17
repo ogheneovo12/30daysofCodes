@@ -26,3 +26,4 @@ access to the “getuser”|
 | 18 | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday18.js/ "Day 18") | continued from day 18, store user in database using moongose orm|
 | 19 | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday19.js/ "Day 19") | continued from day 18, get all users, update, and delete users|
 | 20 | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday20.js/ "Day 20") | continued from day 19, implement getuser by id in param route|
+| 21 | [click here](https://github.com/ogheneovo12/30daysofCodes/blob/master/beday21.js/ "Day 21") | continued from day 20, ilog all request info into a log file|

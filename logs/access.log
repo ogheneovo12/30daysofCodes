@@ -1,0 +1,8 @@
+GET /logs 200 9.316 ms
+GET /users/getuser/wer 401 16.116 ms
+PUT /user/update/5e9612c922d3951d7464e39b 200 63.101 ms
+GET /users 200 7.264 ms
+GET /user/profile?email 401 7.163 ms
+POST /login 200 404.240 ms
+POST /signup 200 7.967 ms
+GET /logs 200 17.450 ms
