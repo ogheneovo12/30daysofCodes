@@ -46,9 +46,23 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  names: {
+    type: Array,
+    default: [],
+  },
+  occupation: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    default: "not stated",
+  },
   time: {
     type: String,
     required: true,
+  },
+  lastLogin: {
+    type: String,
+    default: "never",
   },
   date: {
     type: String,
@@ -193,11 +207,8 @@ const authoriser = async (req, res, next) => {
 
     //token must match the user, if not prevent access
     if (!user || req.body.email != user.email) {
-      return res
-        .status(401)
-        .json({ AUTH: false, error: "Not authorized to access this resource" });
+      throw "Not authorized to access this resource";
     }
-
     const { name, email, signedUp_at, date, time } = user;
     const day = new Date(signedUp_at);
     req.user = { _id: user._id, name, email, date, time };
@@ -205,9 +216,9 @@ const authoriser = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.message.startsWith("jwt")) {
-      error.message = error.message.replace("jwt", "token");
+      error = error.message.replace("jwt", "token");
     }
-    return res.status(401).json({ AUTH: false, message: error.message });
+    return res.status(401).json({ AUTH: false, error });
   }
 };
 
@@ -222,12 +233,13 @@ app.post("/login", async (req, res) => {
     const user = await User.getByValidCredentials(username, req.body.password);
 
     if (!user) {
-      return res.status(401).json({
-        success: "false",
-        error: "invalid credentials",
-      });
+      throw "invalid credentials";
     }
-    const token = await user.generateAuthToken();
+    const day = new Date();
+    user.lastLogin = `${day.getDate()}-${
+      day.getMonth() + 1
+    }-${day.getFullYear()}-${day.toLocaleTimeString()}`;
+    const token = await user.generateAuthToken(); //lol generate token automatically saves the user
     return res.json({
       AUTH: "true",
       token,
@@ -258,13 +270,10 @@ app.post("/signup", async (req, res) => {
       $or: [{ email: req.body.email }, { name: req.body.username }],
     });
     if (existingUser) {
-      return res.json({
-        success: "false",
-        err: "user already exists",
-      });
+      throw "user already exists";
     }
     const day = new Date();
-    const { username, email, password } = req.body;
+    const { username, email, password, names, occupation } = req.body;
     const user = new User({
       name: username,
       email,
@@ -272,8 +281,11 @@ app.post("/signup", async (req, res) => {
       signedUp_at: day.toLocaleString(),
       date: `${day.getDate()}-${day.getMonth() + 1}-${day.getFullYear()}`,
       time: day.toLocaleTimeString(),
+      names,
+      occupation,
     });
-    await user.save();
+    const itSaved = await user.save();
+    if (!itSaved) throw "could not create user";
     const token = await user.generateAuthToken();
     return res.json({
       success: "true",
@@ -318,22 +330,35 @@ app.put("/user/update/:id", async (req, res) => {
     return res.status(401).json({ success: false, error: "inavlid email" });
   }
   if (req.body.password) {
-    //hash it
     req.body.password = await bcrypt.hash(req.body.password, saltRounds);
   }
+
   try {
     //save user with valid entries
     const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      throw "user does not exist";
+    }
+    if (req.body.username || req.body.email) {
+      const existingUser = await User.find({
+        $and: [
+          { $or: [{ email: req.body.email }, { name: req.body.username }] },
+          { _id: { $ne: user._id } },
+        ],
+      });
+      if (existingUser.length > 0) {
+        throw "user with credential already exist";
+      }
+    }
     user.name = req.body.username || user.name;
     user.email = req.body.email || user.email;
     user.password = req.body.password || user.password;
+    user.names = req.body.names || user.names;
     const test = await user.save();
     if (!test) {
-      return res
-        .status(401)
-        .json({ success: false, error: "could not update user" });
+      throw "could not update user";
     }
-    res.json({
+    return res.json({
       success: true,
       user: {
         _id: test._id,
@@ -341,6 +366,7 @@ app.put("/user/update/:id", async (req, res) => {
         username: test.name,
         date: test.date,
         time: test.time,
+        names: test.names,
       },
       message: "user updated succesfully",
     });
@@ -353,10 +379,7 @@ app.delete("/user/delete/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndDelete({ _id: req.params.id });
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        error: `user ${req.params.id} could not be deleted`,
-      });
+      throw `user ${req.params.id} could not be deleted`;
     }
     return res.json({
       success: true,
@@ -368,6 +391,27 @@ app.delete("/user/delete/:id", async (req, res) => {
       error: err,
     });
   }
+});
+app.get("/users/getuser/:id", (req, res) => {
+  User.findById({ _id: req.params.id })
+    .then((user) => {
+      const { _id, email, name, names, occupation, lastLogin } = user;
+      res.json({
+        success: true,
+        _id,
+        email,
+        name,
+        names,
+        occupation,
+        lastLogin,
+      });
+    })
+    .catch((err) => {
+      return res.status(401).json({
+        success: false,
+        error: `could not get user ${req.params.id} `,
+      });
+    });
 });
 /**************** run APP ****************************/
 app.listen(PORT, () => {
